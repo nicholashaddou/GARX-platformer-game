@@ -3,7 +3,7 @@ Repository for GARX platformer game
 
 hello bois lets get to work
 
-##installation
+## installation
 
 
 
@@ -11,4 +11,4 @@ hello bois lets get to work
 
 
 
-##licence
+## licence
