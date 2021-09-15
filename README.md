@@ -2,3 +2,13 @@
 Repository for GARX platformer game
 
 hello bois lets get to work
+
+## installation
+
+
+
+## credits
+
+
+
+## licence
