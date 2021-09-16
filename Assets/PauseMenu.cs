@@ -10,10 +10,12 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;
     public GameObject settingsMenuUI;
     private Scene activeScene;
+
     //mainMenu mainMenu;
     private void Start()
     {
         activeScene = SceneManager.GetActiveScene();
+        Cursor.visible = false;
     }
     // Update is called once per frame
     void Update()
@@ -36,6 +38,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
+        Cursor.visible = false;
         //Debug.Log("resuming");
     }
 
@@ -44,6 +47,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
+        Cursor.visible = true;
     }
 
     public void RestartLevel()
