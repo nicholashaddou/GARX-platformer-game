@@ -38,7 +38,7 @@ public class SettingsMenu : MonoBehaviour
     public void SetVolume (float volumeFromSlider)
     {
         //use exposed parameter volume
-        audioMixer.SetFloat("volumeParamExposed", volumeFromSlider);
+        audioMixer.SetFloat("volumeParamExposed", Mathf.Log10 (volumeFromSlider) *20);
     }
 
     public void SetFullscreen(bool isFullscreen)
