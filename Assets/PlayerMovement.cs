@@ -35,14 +35,20 @@ public class PlayerMovement : MonoBehaviour
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
         Debug.Log("hello");
         //animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
-
-        if (Input.GetButtonDown("Jump"))
+        
+        //if (Input.GetButtonDown("Jump))
+        if (Input.GetKey(KeyCode.UpArrow))
         {
             //SoundManager.PlaySound("Jump2");
             //Debug.Log("code runs");
             jump = true;
            // animator.SetBool("Jumping", true);
         }
+        //if (Input.GetKey(KeyCode.DownArrow)){
+
+            //crouch=true;
+        //}
+
     }
     public void OnLanding()
     {
