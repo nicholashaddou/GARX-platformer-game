@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     bool crouch = false;
     private void Start()
     {
+        //to fix player freezing after unpausing
         Time.timeScale = 1;
     }
 
