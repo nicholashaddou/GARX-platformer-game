@@ -8,16 +8,16 @@ public class mainMenu : MonoBehaviour
 {
     public void PlayGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+2);
+        SceneManager.LoadScene(2);
     }
 
     public void settings()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(1);
     }
     public void goCredits()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 17);
+        SceneManager.LoadScene(17);
     }
     public void QuitGame()
     {
