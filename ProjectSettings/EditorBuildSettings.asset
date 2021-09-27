@@ -18,6 +18,21 @@ EditorBuildSettings:
     path: Assets/Scenes/Level 1 Forest.unity
     guid: d52500087522d944ab5fec5f458c4046
   - enabled: 1
+    path: Assets/Scenes/Level 1 Mountain.unity
+    guid: a2c8b2a89e6751f498a0e50153151b66
+  - enabled: 1
+    path: Assets/Scenes/Level 1 Boss.unity
+    guid: 7eee1d791a9a53e4391ffe354677e98d
+  - enabled: 1
+    path: Assets/Scenes/Level 2 Upper Ground.unity
+    guid: f63f7421b583a1c439b07e36b79ef7bd
+  - enabled: 1
+    path: Assets/Scenes/Level 2 village.unity
+    guid: cdd82d64e8977504e9591c665ffdb65b
+  - enabled: 1
+    path: Assets/Scenes/Level 2 Swamp.unity
+    guid: b7ffce59caff1ab4f851414ad17572ec
+  - enabled: 1
     path: Assets/Scenes/Credits.unity
     guid: 89ae2aa9509c25c48a2f4bb9efa8301e
   m_configObjects: {}
