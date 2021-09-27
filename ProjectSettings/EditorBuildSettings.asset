@@ -33,6 +33,30 @@ EditorBuildSettings:
     path: Assets/Scenes/Level 2 Swamp.unity
     guid: b7ffce59caff1ab4f851414ad17572ec
   - enabled: 1
+    path: Assets/Scenes/Level 2 Boss.unity
+    guid: d1c2d3d98d023714797771dd7c8734ef
+  - enabled: 1
+    path: Assets/Scenes/Level 3 Part 1.unity
+    guid: 607b369e74e62cf41aadb71b51a2b9f2
+  - enabled: 1
+    path: Assets/Scenes/Level 3 Part 2.unity
+    guid: 1205105134b1efd46a07357586b56484
+  - enabled: 1
+    path: Assets/Scenes/Level 3 Part 3.unity
+    guid: 9278677d5eb55ce488e664081284192d
+  - enabled: 1
+    path: Assets/Scenes/Level 3 Boss.unity
+    guid: 81a327e11bede4a4ebb1abe4d8089975
+  - enabled: 1
+    path: Assets/Scenes/Level 4 Upper Inner Volcano.unity
+    guid: a43ca6fda8851e14990cd5ae94f389ff
+  - enabled: 1
+    path: Assets/Scenes/Level 4 Inner Volcano.unity
+    guid: 7ea8b68fefe621543bb3dfa741bb5164
+  - enabled: 1
+    path: Assets/Scenes/Level 4 Heart of Volcano.unity
+    guid: 185f58ebdd9573245b4101ed14981a89
+  - enabled: 1
     path: Assets/Scenes/Credits.unity
     guid: 89ae2aa9509c25c48a2f4bb9efa8301e
   m_configObjects: {}

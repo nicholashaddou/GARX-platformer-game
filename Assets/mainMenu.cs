@@ -17,7 +17,7 @@ public class mainMenu : MonoBehaviour
     }
     public void goCredits()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 3);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 17);
     }
     public void QuitGame()
     {
