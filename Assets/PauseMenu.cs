@@ -10,6 +10,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;
     public GameObject settingsMenuUI;
     private Scene activeScene;
+    //private Scene mainMenu;
 
     //mainMenu mainMenu;
     private void Start()
@@ -85,7 +86,8 @@ public class PauseMenu : MonoBehaviour
     //----------------------------
     public void LoadMenu()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        //mainMenu = SceneManager.GetSceneByBuildIndex(0);
+        SceneManager.LoadScene(0);
     }
 
     public void QuitGameFromPause()

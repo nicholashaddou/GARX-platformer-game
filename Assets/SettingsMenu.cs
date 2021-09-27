@@ -47,6 +47,6 @@ public class SettingsMenu : MonoBehaviour
     }
     public void backToMainMenuFromSettings()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        SceneManager.LoadScene(0);
     }
 }
