@@ -10,6 +10,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;
     public GameObject settingsMenuUI;
     private Scene activeScene;
+    MobileHealthController2D mobileHealthController2D;
     //private Scene mainMenu;
 
     //mainMenu mainMenu;
@@ -93,6 +94,27 @@ public class PauseMenu : MonoBehaviour
     public void QuitGameFromPause()
     {
         Application.Quit();
+    }
+
+    public void SavePlayer()
+    {
+        SaveSystem.SavePlayer(mobileHealthController2D);
+    }
+
+    public void LoadPlayer()
+    {
+        PlayerData data = SaveSystem.LoadPlayer();
+
+        mobileHealthController2D.level = data.level;
+        mobileHealthController2D.health = data.health;
+
+        Vector3 position;
+        position.x = data.position[0];
+        position.y = data.position[1];
+        position.z = data.position[2];
+
+        mobileHealthController2D.transform.position = position;
+        Debug.Log("level is = " + mobileHealthController2D.level);
     }
 
 }

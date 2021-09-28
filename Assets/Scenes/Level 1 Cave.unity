@@ -1964,6 +1964,7 @@ GameObject:
   - component: {fileID: 1030386386}
   - component: {fileID: 1030386385}
   - component: {fileID: 1030386387}
+  - component: {fileID: 1030386388}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2144,6 +2145,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 1030386383}
   runSpeed: 160
+--- !u!114 &1030386388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030386380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5af449e24c5ead43b3ef6cde17efb72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 2
+  health: 100
 --- !u!1 &1155965697
 GameObject:
   m_ObjectHideFlags: 0
@@ -3195,6 +3210,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b4d122b55690ae4ebb6263e6eb412d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 0
+  levelName: 
+  black: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!61 &1441958482
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3334,7 +3353,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 654141049}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: Resume
+        m_MethodName: SavePlayer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9136,7 +9155,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 654141049}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: Resume
+        m_MethodName: LoadPlayer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
