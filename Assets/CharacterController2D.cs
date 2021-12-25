@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class CharacterController2D : MonoBehaviour
@@ -11,6 +11,19 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] private Transform m_GroundCheck;                           // A position marking where to check if the player is grounded.
     [SerializeField] private Transform m_CeilingCheck;                          // A position marking where to check for ceilings
     [SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider that will be disabled when crouching
+ 
+
+    //Attack resource------------------
+    private bool lightAttack;//kondisi pengaktifan light attack
+    private bool heavyAttack;//kondisi pengaktifan heavy attack
+    private float timeAttack;//digunakan untuk mengimplementasikan attack rate
+    private float buttonTimeA;//digunakan untuk implementasi hold key pada heavy attack bersama dengan buttonTimeZ
+    private float buttonTimeZ;
+    public float attackRate = .5f;//selang waktu minimum untuk tiap attack
+    public Transform attackPos;//sebuah class Transform dari pusat attackRange
+    public LayerMask whatIsEnemies;//merujuk pada layer enemies berada
+    public float attackRange = 1f;//besar attackRange
+    //Attack resource------------------
 
     const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
     private bool m_Grounded;            // Whether or not the player is grounded.
@@ -41,6 +54,28 @@ public class CharacterController2D : MonoBehaviour
             OnCrouchEvent = new BoolEvent();
     }
 
+    private void Update(){
+        //Attack condition-----------------
+        if(timeAttack <= 0){
+            if(Input.GetButtonDown("Fire1")){
+                buttonTimeA = Time.time;
+            }
+            else if(Input.GetButtonUp("Fire1")){
+                buttonTimeZ = Time.time - buttonTimeA;
+            }
+            if(buttonTimeZ>0f){
+                if(buttonTimeZ > 1f){ //1f adalah waktu seberapa lama holdkey diperlukan untuk heavy attack
+                    heavyAttack = true;
+                }
+                else lightAttack = true;
+            }
+            buttonTimeZ = 0f;
+        }
+        else{
+            timeAttack -= Time.deltaTime;
+        }
+        //Attack condition------------------
+    }
     private void FixedUpdate()
     {
         bool wasGrounded = m_Grounded;
@@ -58,6 +93,8 @@ public class CharacterController2D : MonoBehaviour
                     OnLandEvent.Invoke();
             }
         }
+
+        Attack();
     }
 
 
@@ -140,5 +177,28 @@ public class CharacterController2D : MonoBehaviour
         m_FacingRight = !m_FacingRight;
 
         transform.Rotate(0f, 180f, 0f);
+    }
+
+    public void Attack(){
+        Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
+        if(lightAttack){
+            for(int i = 0; i<enemiesToDamage.Length; i++){
+                Debug.Log("lightAttack");
+                //enemies take damage method for lightAttack
+            }
+            lightAttack = false;
+        }
+        else if(heavyAttack){
+            for(int i = 0; i<enemiesToDamage.Length; i++){
+                Debug.Log("heavyAttack");
+                //enemies take damage method for heavyAttack
+            }
+            heavyAttack = false;
+        }
+    }
+
+    void OnDrawGizmosSelected(){
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPos.position, attackRange);
     }
 }
