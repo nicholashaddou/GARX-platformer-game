@@ -11,7 +11,10 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] private Transform m_GroundCheck;                           // A position marking where to check if the player is grounded.
     [SerializeField] private Transform m_CeilingCheck;                          // A position marking where to check for ceilings
     [SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider that will be disabled when crouching
- 
+
+    //double jump
+    private int doubleJump;
+    public int doubleJumpAmount;
 
     //Attack resource------------------
     private bool lightAttack;//kondisi pengaktifan light attack
@@ -86,6 +89,21 @@ public class CharacterController2D : MonoBehaviour
         //Attack condition------------------
 
         Block();
+
+        //for double jumping 
+        if (m_Grounded)
+        {
+            doubleJump = doubleJumpAmount;
+        }
+        //MAINTAIN JUMPFORCE 5<jumpforce<10
+        if(Input.GetKeyDown(KeyCode.UpArrow) && doubleJump > 0)
+        {
+            m_Rigidbody2D.velocity = Vector2.up * m_JumpForce;
+            doubleJump--; //biar ga infinite double jump
+        }else if(Input.GetKeyDown(KeyCode.UpArrow) && doubleJump == 0 && m_Grounded == true){
+            m_Rigidbody2D.velocity = Vector2.up * m_JumpForce;
+        }
+
     }
     private void FixedUpdate()
     {
