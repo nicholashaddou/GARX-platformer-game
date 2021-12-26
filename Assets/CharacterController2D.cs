@@ -25,6 +25,15 @@ public class CharacterController2D : MonoBehaviour
     public float attackRange = 1f;//besar attackRange
     //Attack resource------------------
 
+    //Block resource-----------------
+    public bool isBlock; //kondisi block dijalankan
+    public float blockDuration; //maksimal durasi block dalam satu aksi
+    private float blockTime; //implementasi block duration
+    private float blockTimeMemA; //berfungsi menyimpan selang waktu dengan block terakhir, bersama dengan blockTimeMemZ
+    private float blockTimeMemZ;
+    private bool musuhMenyerang; //sementara digunakan untuk menggantikan konsisi diserang oleh musuh
+    //Block resource-----------------
+
     const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
     private bool m_Grounded;            // Whether or not the player is grounded.
     const float k_CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
@@ -75,6 +84,8 @@ public class CharacterController2D : MonoBehaviour
             timeAttack -= Time.deltaTime;
         }
         //Attack condition------------------
+
+        Block();
     }
     private void FixedUpdate()
     {
@@ -182,23 +193,56 @@ public class CharacterController2D : MonoBehaviour
     public void Attack(){
         Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
         if(lightAttack){
+            
+            //block mini-stun section
+            if(blockTimeMemZ<=.3f){
+                float r = Random.Range(1,100);
+                if(r%4 == 0){
+                    for(int i = 0; i<enemiesToDamage.Length; i++){
+                        //stun method on enemy class
+                    }
+                }
+            }
+            //block mini-stun section
             for(int i = 0; i<enemiesToDamage.Length; i++){
-                Debug.Log("lightAttack");
+                // Debug.Log("lightAttack");
                 //enemies take damage method for lightAttack
             }
             lightAttack = false;
         }
         else if(heavyAttack){
             for(int i = 0; i<enemiesToDamage.Length; i++){
-                Debug.Log("heavyAttack");
+                // Debug.Log("heavyAttack");
                 //enemies take damage method for heavyAttack
             }
             heavyAttack = false;
         }
     }
-
     void OnDrawGizmosSelected(){
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPos.position, attackRange);
+    }
+
+    void Block(){
+        if(Input.GetKeyDown(KeyCode.B)){
+            isBlock = true;
+            blockTime = blockDuration;
+        }
+        else if(Input.GetKeyUp(KeyCode.B) || blockTime<=0){
+            isBlock = false;
+            blockTime = 0; 
+        }
+
+        if(blockTime>0) blockTime -= Time.deltaTime;
+        blockTimeMemZ = Time.time - blockTimeMemA;
+
+        if(Input.GetKeyDown(KeyCode.G)) musuhMenyerang = true;
+        else if(Input.GetKeyUp(KeyCode.G)) musuhMenyerang = false;
+
+        //block section
+        if(isBlock && musuhMenyerang){
+            isBlock = false;
+            blockTimeMemA = Time.time;   
+        }
     }
 }

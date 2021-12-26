@@ -33,7 +33,16 @@ public class PlayerMovement : MonoBehaviour
     }*/
     private void Update()
     {
-        horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+        //memperlambat gerakan untuk mekanisme block
+        float runSpeedTemp;
+        if(controller.isBlock){
+            runSpeedTemp = runSpeed*.2f ;
+        }
+        else{
+            runSpeedTemp = runSpeed;
+        }
+
+        horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeedTemp;
         // Debug.Log("hello");
         //animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
         

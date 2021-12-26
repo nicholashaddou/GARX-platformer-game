@@ -1111,6 +1111,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   attackRange: 1
+  isBlock: 0
+  blockDuration: 2
   OnLandEvent:
     m_PersistentCalls:
       m_Calls: []
