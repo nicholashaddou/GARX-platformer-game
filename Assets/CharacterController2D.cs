@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -36,6 +37,16 @@ public class CharacterController2D : MonoBehaviour
     private float blockTimeMemZ;
     private bool musuhMenyerang; //sementara digunakan untuk menggantikan konsisi diserang oleh musuh
     //Block resource-----------------
+
+    //Dash resource-----------------
+    private bool rightDash;
+    private bool leftDash;
+    private bool downDash;
+    public float dashDistance;
+    private float lastclickKanan;
+    private float lastclickKiri;
+    private float lastclickBawah;
+    //Dash resource-----------------
 
     const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
     private bool m_Grounded;            // Whether or not the player is grounded.
@@ -90,6 +101,32 @@ public class CharacterController2D : MonoBehaviour
 
         Block();
 
+        //dash condition-------------------
+        if(Input.GetKeyDown(KeyCode.RightArrow)){
+            float selangWaktu = Time.time - lastclickKanan;
+            if(selangWaktu <= .2f){
+                rightDash = true;
+            }
+            lastclickKanan = Time.time;
+        }
+
+        if(Input.GetKeyDown(KeyCode.LeftArrow)){
+            float selangWaktu = Time.time - lastclickKiri;
+            if(selangWaktu <= .2f){
+                leftDash = true;
+            }
+            lastclickKiri = Time.time;
+        }
+
+        if(Input.GetKeyDown(KeyCode.DownArrow) && !m_Grounded){
+            float selangWaktu = Time.time - lastclickBawah;
+            if(selangWaktu <= .2f){
+                downDash = true;
+            }
+            lastclickBawah = Time.time;
+        }
+        //dash condition-------------------
+
         //for double jumping 
         if (m_Grounded)
         {
@@ -124,6 +161,8 @@ public class CharacterController2D : MonoBehaviour
         }
 
         Attack();
+        StartCoroutine(Dash());
+        DownwardDash();
     }
 
 
@@ -214,7 +253,7 @@ public class CharacterController2D : MonoBehaviour
             
             //block mini-stun section
             if(blockTimeMemZ<=.3f){
-                float r = Random.Range(1,100);
+                float r = UnityEngine.Random.Range(1,100);//random class using UnityEngine library
                 if(r%4 == 0){
                     for(int i = 0; i<enemiesToDamage.Length; i++){
                         //stun method on enemy class
@@ -222,6 +261,7 @@ public class CharacterController2D : MonoBehaviour
                 }
             }
             //block mini-stun section
+
             for(int i = 0; i<enemiesToDamage.Length; i++){
                 // Debug.Log("lightAttack");
                 //enemies take damage method for lightAttack
@@ -263,4 +303,26 @@ public class CharacterController2D : MonoBehaviour
             blockTimeMemA = Time.time;   
         }
     }
+
+    IEnumerator Dash(){
+        if(rightDash){
+            m_Rigidbody2D.velocity = Vector2.right*dashDistance;
+            rightDash = false;
+            yield return new WaitForSeconds(0.05f);
+            m_Rigidbody2D.velocity = Vector2.zero;
+        }
+        else if(leftDash){
+            m_Rigidbody2D.velocity = Vector2.left*dashDistance;
+            leftDash = false;
+            yield return new WaitForSeconds(0.05f);
+            m_Rigidbody2D.velocity = Vector2.zero;
+        }
+    }
+
+    void DownwardDash(){
+        if(downDash){
+            m_Rigidbody2D.velocity = Vector2.down*50f;
+            downDash = false;
+        }
+    }    
 }
