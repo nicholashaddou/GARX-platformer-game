@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public CharacterController2D controller;
-    //public Animator animator;
+    public Animator animator;
    // public Inventory inventory;
     //public GameObject gameOverText, restartButton;
    // public MobileHealthController healthController;
@@ -42,7 +42,22 @@ public class PlayerMovement : MonoBehaviour
             runSpeedTemp = runSpeed;
         }
 
-        horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeedTemp;
+        //saat menyerang tidak bisa bergerak/run
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("lightAttack")){
+            horizontalMove = 0;
+        }
+        else{
+            horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeedTemp;
+        }
+
+        //sektor animasi
+        if(horizontalMove != 0){
+            animator.SetBool("Run", true);
+        }
+        else{
+            animator.SetBool("Run", false);
+        }
+
         // Debug.Log("hello");
         //animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
         

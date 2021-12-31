@@ -13,6 +13,11 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] private Transform m_CeilingCheck;                          // A position marking where to check for ceilings
     [SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider that will be disabled when crouching
 
+    //Animation-----------------------
+    public Animator animator;
+    private bool running = false; //digunakan untuk mengatasi bug salah arah pada saat menyerang sambil berlari.
+    //--------------------------------
+
     //double jump
     private int doubleJump;
     public int doubleJumpAmount;
@@ -23,7 +28,7 @@ public class CharacterController2D : MonoBehaviour
     private float timeAttack;//digunakan untuk mengimplementasikan attack rate
     private float buttonTimeA;//digunakan untuk implementasi hold key pada heavy attack bersama dengan buttonTimeZ
     private float buttonTimeZ;
-    public float attackRate = .5f;//selang waktu minimum untuk tiap attack
+    public float attackRate = .99f;//selang waktu minimum untuk tiap attack
     public Transform attackPos;//sebuah class Transform dari pusat attackRange
     public LayerMask whatIsEnemies;//merujuk pada layer enemies berada
     public float attackRange = 1f;//besar attackRange
@@ -52,7 +57,7 @@ public class CharacterController2D : MonoBehaviour
     private bool m_Grounded;            // Whether or not the player is grounded.
     const float k_CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
     private Rigidbody2D m_Rigidbody2D;
-    private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+    private bool m_FacingRight = false;  // For determining which way the player is currently facing.
     private Vector3 m_Velocity = Vector3.zero;
 
     [Header("Events")]
@@ -141,6 +146,24 @@ public class CharacterController2D : MonoBehaviour
             m_Rigidbody2D.velocity = Vector2.up * m_JumpForce;
         }
 
+
+        //flip fix
+        float m = Input.GetAxisRaw("Horizontal");
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("run")) running = true;
+        if(m>0 && running){
+            m_FacingRight = true;
+            transform.rotation = Quaternion.Euler(0f,0f,0f);
+        }
+        else if(m<0 && running){
+            m_FacingRight = false;
+            transform.rotation = Quaternion.Euler(0f,-180f,0f);
+        }
+
+        //keadaan saat frame sebelumnya berada pada state "run" namun frame sekarang sudah tidak berada pada state "run"
+        if(running && !animator.GetCurrentAnimatorStateInfo(0).IsName("run")){
+            transform.Rotate(0f, 180f, 0f);
+            running = false;
+        }
     }
     private void FixedUpdate()
     {
@@ -217,17 +240,17 @@ public class CharacterController2D : MonoBehaviour
             m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
 
             // If the input is moving the player right and the player is facing left...
-            if (move > 0 && !m_FacingRight)
-            {
-                // ... flip the player.
-                Flip();
-            }
+            // if (move > 0 && !m_FacingRight)
+            // {
+            //     // ... flip the player.
+            //     Flip();
+            // }
             // Otherwise if the input is moving the player left and the player is facing right...
-            else if (move < 0 && m_FacingRight)
-            {
-                // ... flip the player.
-                Flip();
-            }
+            // else if (move < 0 && m_FacingRight)
+            // {
+            //     // ... flip the player.
+            //     Flip();
+            // }
         }
         // If the player should jump...
         if (m_Grounded && jump)
@@ -250,7 +273,7 @@ public class CharacterController2D : MonoBehaviour
     public void Attack(){
         Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
         if(lightAttack){
-            
+            animator.SetTrigger("LightAttack");
             //block mini-stun section
             if(blockTimeMemZ<=.3f){
                 float r = UnityEngine.Random.Range(1,100);//random class using UnityEngine library
